@@ -1,7 +1,11 @@
 import React from 'react'
 import { useForm } from "react-hook-form"
+import { useNavigate } from 'react-router-dom'
+import Dashboard from './Dashboard'
 
 const Home = () => {
+
+  const navigate = useNavigate()
 
   // Login Form
   const {
@@ -49,6 +53,7 @@ const Home = () => {
 
     if(statusCode == 200){
       // Code after user is logged in
+      navigate('/dashboard')
       console.log(result.message)
     }
   }
@@ -78,6 +83,7 @@ const Home = () => {
 
     if(statusCode == 201){
       // Code after user is registered
+      navigate('/dashboard')
       console.log(result.message)
     }
     
@@ -99,7 +105,7 @@ const Home = () => {
           <div className='bg-[#1E293B] w-full max-w-md rounded-3xl p-8 shadow-2xl'>
 
             <h2 className='text-[#F8FAFC] text-3xl font-bold text-center mb-8'>
-              Login <span className='text-slate-400 text-xl font-medium'>(Existing User)</span>
+              Login <span className='text-slate-400 text-xl font-medium'>(For existing user)</span>
             </h2>
 
             {loginSubmitting && (
@@ -168,7 +174,7 @@ const Home = () => {
           <div className='bg-[#1E293B] w-full max-w-md rounded-3xl px-8 py-8 shadow-2xl'>
 
             <h2 className='text-[#F8FAFC] text-3xl font-bold text-center mb-8'>
-              Register <span className='text-slate-400 text-xl font-medium'>(New user)</span>
+              Register <span className='text-slate-400 text-xl font-medium'>(For new user)</span>
             </h2>
 
             {registerSubmitting && (
