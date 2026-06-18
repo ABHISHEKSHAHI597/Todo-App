@@ -27,21 +27,41 @@ const Home = () => {
   const password = watch("password")
 
   const submitLogin = async (data) => {
-    await new Promise(resolve => setTimeout(resolve, 3000))
 
-    console.log("Delay of 3 seconds")
+    const res = await fetch('http://localhost:5000/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: data.email,
+        password: data.password
+      })
+    })
 
-    console.log(data)
+    const result = await res.json()
+    console.log(result)
+
   }
 
   const submitRegister = async (data) => {
     const { confirmPassword, ...userData } = data
 
-    await new Promise(resolve => setTimeout(resolve, 3000))
+    const res = await fetch('http://localhost:5000/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: data.name,
+        email: data.email,
+        password: data.password
+      })
+    })
 
-    console.log("Delay of 3 seconds")
-
-    console.log(userData)
+    const result = await res.json()
+    
+    console.log(result)
   }
 
   return (
