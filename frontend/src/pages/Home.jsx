@@ -2,21 +2,46 @@ import React from 'react'
 import { useForm } from "react-hook-form"
 
 const Home = () => {
+
+  // Login Form
   const {
-    register,
-    handleSubmit,
-    setError,
-    formState: { errors, isSubmitting },
-  } = useForm();
+    register: loginRegister,
+    handleSubmit: handleLoginSubmit,
+    formState: {
+      errors: loginErrors,
+      isSubmitting: loginSubmitting,
+    },
+  } = useForm()
+
+  // Register Form
+  const {
+    register: registerRegister,
+    handleSubmit: handleRegisterSubmit,
+    watch,
+    formState: {
+      errors: registerErrors,
+      isSubmitting: registerSubmitting,
+    },
+  } = useForm()
+
+  const password = watch("password")
 
   const submitLogin = async (data) => {
-    console.log('This form is showing data of login form')
+    await new Promise(resolve => setTimeout(resolve, 3000))
+
+    console.log("Delay of 3 seconds")
+
     console.log(data)
   }
 
   const submitRegister = async (data) => {
-    console.log('This form is showing data of register form')
-    console.log(data)
+    const { confirmPassword, ...userData } = data
+
+    await new Promise(resolve => setTimeout(resolve, 3000))
+
+    console.log("Delay of 3 seconds")
+
+    console.log(userData)
   }
 
   return (
@@ -24,52 +49,199 @@ const Home = () => {
       <div className='bg-[#0F172A] min-h-screen flex flex-col'>
 
         {/* Header */}
-        <div className='h-20 bg-[#111827] flex items-center justify-center text-[#22C55E] text-4xl'>
+        <div className='h-20 bg-[#111827] flex items-center justify-center text-[#22C55E] text-4xl font-semibold shadow-lg'>
           <p>Welcome to my Todo App</p>
         </div>
 
         {/* Login and Register Cards */}
-        <div className='min-w-screen flex flex-1 gap-40 justify-center mt-10'>
+        <div className='flex flex-1 gap-12 justify-center items-center px-10'>
 
           {/* Login Card */}
-          <div className='bg-[#1E293B] w-1/3 flex flex-col items-center rounded-3xl'>
-            <p className='text-[#F8FAFC] text-3xl'>Login</p>
+          <div className='bg-[#1E293B] w-full max-w-md rounded-3xl p-8 shadow-2xl'>
 
-            {isSubmitting && <div className='text-green-500'>Submitting...</div>}
+            <h2 className='text-[#F8FAFC] text-3xl font-bold text-center mb-8'>
+              Login <span className='text-slate-400 text-xl font-medium'>(Existing User)</span>
+            </h2>
 
-            <form onSubmit={handleSubmit(submitLogin)}>
+            {loginSubmitting && (
+              <div className='text-green-500 text-center mb-4'>
+                Submitting...
+              </div>
+            )}
 
-              <input placeholder='Enter email' {...register("email", { required: { value: true, message: "Please enter your email" } })} type="email" className='block'/>
-              {errors.email && <div className='text-red-600'>{errors.email.message}</div>}
+            <form
+              onSubmit={handleLoginSubmit(submitLogin)}
+              className='flex flex-col gap-5'
+            >
 
-              <input placeholder='Enter password' {...register("password", { required: { value: true, message: "Please enter your password" } })} type="email" className='block'/>
-              {errors.password && <div className='text-red-600'>{errors.password.message}</div>}
+              <div>
+                <input
+                  placeholder='Enter email'
+                  {...loginRegister("email", {
+                    required: {
+                      value: true,
+                      message: "Please enter your email"
+                    }
+                  })}
+                  type="email"
+                  className='w-full p-3 rounded-xl bg-slate-700 text-white border border-slate-600 focus:outline-none focus:border-[#22C55E]'
+                />
 
-              <input disabled={isSubmitting} type='submit' />
+                {loginErrors.email && (
+                  <div className='text-red-500 mt-1 text-sm'>
+                    {loginErrors.email.message}
+                  </div>
+                )}
+              </div>
+
+              <div>
+                <input
+                  placeholder='Enter password'
+                  {...loginRegister("password", {
+                    required: {
+                      value: true,
+                      message: "Please enter your password"
+                    }
+                  })}
+                  type="password"
+                  className='w-full p-3 rounded-xl bg-slate-700 text-white border border-slate-600 focus:outline-none focus:border-[#22C55E]'
+                />
+
+                {loginErrors.password && (
+                  <div className='text-red-500 mt-1 text-sm'>
+                    {loginErrors.password.message}
+                  </div>
+                )}
+              </div>
+
+              <input
+                disabled={loginSubmitting}
+                type='submit'
+                value='Login'
+                className='bg-[#22C55E] text-white py-3 rounded-xl font-semibold cursor-pointer hover:bg-green-600 transition duration-200 disabled:opacity-50'
+              />
 
             </form>
+
           </div>
 
           {/* Register Card */}
-          <div className='bg-[#1E293B] w-1/3 flex flex-col items-center rounded-3xl'>
-            <p className='text-[#F8FAFC] text-3xl'>Register</p>
+          <div className='bg-[#1E293B] w-full max-w-md rounded-3xl px-8 py-8 shadow-2xl'>
 
-            {isSubmitting && <div className='text-green-500'>Submitting...</div>}
+            <h2 className='text-[#F8FAFC] text-3xl font-bold text-center mb-8'>
+              Register <span className='text-slate-400 text-xl font-medium'>(New user)</span>
+            </h2>
 
-            <form onSubmit={handleSubmit(submitRegister)}>
+            {registerSubmitting && (
+              <div className='text-green-500 text-center mb-2'>
+                Submitting...
+              </div>
+            )}
 
-              <input placeholder='Enter username' {...register("username", { required: { value: true, message: "Please enter your username" } })} type="text" className='block' />
-              {errors.username && <div className='text-red-600'>{errors.username.message}</div>}
+            <form
+              onSubmit={handleRegisterSubmit(submitRegister)}
+              className='flex flex-col gap-5'
+            >
 
-              <input placeholder='Enter email' {...register("email", { required: { value: true, message: "Please enter your email" } })} type="email" className='block'/>
-              {errors.email && <div className='text-red-600'>{errors.email.message}</div>}
+              <div>
+                <input
+                  placeholder='Enter username'
+                  {...registerRegister("username", {
+                    required: {
+                      value: true,
+                      message: "Please enter your username"
+                    }
+                  })}
+                  type="text"
+                  className='w-full p-3 rounded-xl bg-slate-700 text-white border border-slate-600 focus:outline-none focus:border-[#22C55E]'
+                />
 
-              <input placeholder='Enter password' {...register("password", { required: { value: true, message: "Please enter your password" }, minLength: { value: 8, message: "Min length is 8" }, maxLength: { value: 16, message: "Max length is 16" } })} type="password" className='block' />
-              {errors.password && <div className='text-red-600'>{errors.password.message}</div>}
+                {registerErrors.username && (
+                  <div className='text-red-500 mt-1 text-sm'>
+                    {registerErrors.username.message}
+                  </div>
+                )}
+              </div>
 
-              <input disabled={isSubmitting} type='submit' />
+              <div>
+                <input
+                  placeholder='Enter email'
+                  {...registerRegister("email", {
+                    required: {
+                      value: true,
+                      message: "Please enter your email"
+                    }
+                  })}
+                  type="email"
+                  className='w-full p-3 rounded-xl bg-slate-700 text-white border border-slate-600 focus:outline-none focus:border-[#22C55E]'
+                />
+
+                {registerErrors.email && (
+                  <div className='text-red-500 mt-1 text-sm'>
+                    {registerErrors.email.message}
+                  </div>
+                )}
+              </div>
+
+              <div>
+                <input
+                  placeholder='Enter password'
+                  {...registerRegister("password", {
+                    required: {
+                      value: true,
+                      message: "Please enter your password"
+                    },
+                    minLength: {
+                      value: 8,
+                      message: "Min length is 8"
+                    },
+                    maxLength: {
+                      value: 16,
+                      message: "Max length is 16"
+                    }
+                  })}
+                  type="password"
+                  className='w-full p-3 rounded-xl bg-slate-700 text-white border border-slate-600 focus:outline-none focus:border-[#22C55E]'
+                />
+
+                {registerErrors.password && (
+                  <div className='text-red-500 mt-1 text-sm'>
+                    {registerErrors.password.message}
+                  </div>
+                )}
+              </div>
+
+              <div>
+                <input
+                  placeholder='Confirm password'
+                  {...registerRegister("confirmPassword", {
+                    required: {
+                      value: true,
+                      message: "Please confirm your password"
+                    },
+                    validate: (value) =>
+                      value === password || "Passwords do not match"
+                  })}
+                  type="password"
+                  className='w-full p-3 rounded-xl bg-slate-700 text-white border border-slate-600 focus:outline-none focus:border-[#22C55E]'
+                />
+
+                {registerErrors.confirmPassword && (
+                  <div className='text-red-500 mt-1 text-sm'>
+                    {registerErrors.confirmPassword.message}
+                  </div>
+                )}
+              </div>
+
+              <input
+                disabled={registerSubmitting}
+                type='submit'
+                value='Register'
+                className='bg-[#22C55E] text-white py-3 rounded-xl font-semibold cursor-pointer hover:bg-green-600 transition duration-200 disabled:opacity-50'
+              />
 
             </form>
+
           </div>
 
         </div>
