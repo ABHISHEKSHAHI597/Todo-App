@@ -1,6 +1,7 @@
 import User from "../models/userModel.js";
 import asyncHandler from "express-async-handler"
 import mongoose from "mongoose"
+import bcrypt from "bcryptjs"
 
 const register = asyncHandler(async(req,res)=>{
     const {name, email, password} = req.body
@@ -14,11 +15,16 @@ const register = asyncHandler(async(req,res)=>{
         throw new Error('User already exists')
     }
     
-    await User.create({
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const newUser = await User.create({
         name,
         email,
-        password
+        password:hashedPassword,
     })
+
+    req.session.userId = newUser._id
 
     res.status(201).json({
         message: "Registration successfull"

@@ -1,15 +1,21 @@
 import User from "../models/userModel.js";
 import asyncHandler from "express-async-handler"
 import mongoose from "mongoose"
+import bcrypt from "bcryptjs"
 
-const login = asyncHandler(async(req,res)=>{
-    const {email, password} = req.body
-    
-    const user = await User.findOne({email})
+const login = asyncHandler(async (req, res) => {
+    const { email, password } = req.body
 
-    if(!user || (password !== user.password)){
+    const user = await User.findOne({ email })
+
+    const matchPassword = await bcrypt.compare(
+        password,
+        user.password
+    );
+
+    if (!user || !matchPassword) {
         res.status(401).json({
-            message: "Logged in failed"
+            message: "Login failed"
         })
         throw new Error('Login failed')
     }
@@ -22,4 +28,4 @@ const login = asyncHandler(async(req,res)=>{
 
 })
 
-export {login}
+export { login }
