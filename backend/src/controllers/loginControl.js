@@ -7,19 +7,19 @@ const login = asyncHandler(async(req,res)=>{
     
     const user = await User.findOne({email})
 
-    if(!user){
-        res.status(400)
-        throw new Error('User does not exist')
+    if(!user || (password !== user.password)){
+        res.status(401).json({
+            message: "Logged in failed"
+        })
+        throw new Error('Login failed')
     }
 
-    if(password !== user.password){
-        res.status(400)
-        throw new Error('Password did not match') 
-    }
-    
+    req.session.userId = user._id
+
     res.status(200).json({
-        email
+        message: "Succesfully logged in"
     })
+
 })
 
 export {login}

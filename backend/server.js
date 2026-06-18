@@ -4,13 +4,27 @@ import cors from "cors"
 import {login} from "./src/controllers/loginControl.js"
 import {register} from "./src/controllers/registerControl.js"
 import mongoose from "mongoose"
+import dotenv from "dotenv"
+import { protect } from "./src/middleware/sessionId.js"
+import session from "express-session";
 
-const port = 5000
+dotenv.config()
 const app = express()
+const port = 5000
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
 app.use(express.json())
+
 app.use(cors())
 
-await mongoose.connect("mongodb+srv://shahiabhishek597_db_user:WqAhOv1ETPRhq4sN@cluster0myd.9wmepy7.mongodb.net/todoApp")
+await mongoose.connect(process.env.MONGO_URI)
 
 app.post('/login', login)
 app.post('/register', register)

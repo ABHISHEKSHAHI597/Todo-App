@@ -38,10 +38,19 @@ const Home = () => {
         password: data.password
       })
     })
-
+    
+    const statusCode = await res.status
+    
     const result = await res.json()
-    console.log(result)
+    
+    if (statusCode == 401){
+      alert(result.message);
+    }
 
+    if(statusCode == 200){
+      // Code after user is logged in
+      console.log(result.message)
+    }
   }
 
   const submitRegister = async (data) => {
@@ -59,9 +68,19 @@ const Home = () => {
       })
     })
 
+    const statusCode = res.status
+
     const result = await res.json()
+
+    if (statusCode == 409){
+      alert(result.message);
+    }
+
+    if(statusCode == 201){
+      // Code after user is registered
+      console.log(result.message)
+    }
     
-    console.log(result)
   }
 
   return (

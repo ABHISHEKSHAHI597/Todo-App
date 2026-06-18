@@ -8,7 +8,9 @@ const register = asyncHandler(async(req,res)=>{
     const user = await User.findOne({ email })
 
     if(user){
-        res.status(400)
+        res.status(409).json({
+            message: "User with this email id already exists"
+        })
         throw new Error('User already exists')
     }
     
@@ -18,8 +20,8 @@ const register = asyncHandler(async(req,res)=>{
         password
     })
 
-    res.status(200).json({
-        email
+    res.status(201).json({
+        message: "Registration successfull"
     })
 })
 
