@@ -30,10 +30,13 @@ const Home = () => {
 
   const password = watch("password")
 
+  // Login function
+
   const submitLogin = async (data) => {
 
     const res = await fetch('http://localhost:5000/login', {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -58,16 +61,19 @@ const Home = () => {
     }
   }
 
+  // Register function
+
   const submitRegister = async (data) => {
     const { confirmPassword, ...userData } = data
 
     const res = await fetch('http://localhost:5000/register', {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        name: data.name,
+        name: data.username,
         email: data.email,
         password: data.password
       })

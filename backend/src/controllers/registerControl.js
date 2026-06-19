@@ -12,7 +12,6 @@ const register = asyncHandler(async(req,res)=>{
         res.status(409).json({
             message: "User with this email id already exists"
         })
-        throw new Error('User already exists')
     }
     
     const salt = await bcrypt.genSalt(10);

@@ -1,6 +1,7 @@
-import mongoose, { BaseCollection } from "mongoose";
+import mongoose from "mongoose";
 
 const todoSchema = new mongoose.Schema({
+    name: String,
     email: String,
     desc: String,
     isDone: Boolean,
@@ -8,4 +9,4 @@ const todoSchema = new mongoose.Schema({
     timestamps: true,
 })
 
-export default mongoose.model('User', userSchema)
+export default mongoose.model('Todo', todoSchema)
