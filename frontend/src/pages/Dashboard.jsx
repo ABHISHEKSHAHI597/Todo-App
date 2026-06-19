@@ -4,6 +4,8 @@ import { FaTasks, FaCheckCircle, FaClock, FaPlus, FaSignOutAlt, FaUser } from 'r
 import { Link } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
 import Todo from './AddTodo'
+import Sidebar from '../components/Sidebar'
+import Navbar from '../components/Navbar'
 
 const Dashboard = () => {
 
@@ -67,50 +69,12 @@ const Dashboard = () => {
       <div className="min-h-screen bg-slate-900 text-slate-50">
 
         {/* Navbar */}
-        <nav className="h-20 bg-slate-950 border-b border-slate-800 flex items-center justify-between px-8">
-          <div className="flex items-center gap-3">
-            <FaTasks className="text-green-500 text-2xl" />
-            <h1 className="text-2xl font-bold">Todo App</h1>
-          </div>
-
-          <div className="flex items-center gap-6">
-            <div className="flex items-center gap-2">
-              <FaUser />
-              <span>{name}</span>
-            </div>
-
-            <button onClick={handleLogout} className="flex items-center gap-2 bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg transition">
-              <FaSignOutAlt />
-              Logout
-            </button>
-          </div>
-        </nav>
+        <Navbar name={name}/>
 
         <div className="flex">
 
           {/* Sidebar */}
-          <aside className="w-64 min-h-[calc(100vh-80px)] bg-slate-800 border-r border-slate-700 p-6">
-
-            <h2 className="text-lg font-semibold mb-6 text-slate-300">
-              Navigation
-            </h2>
-
-            <ul className="space-y-3">
-
-              <li className="bg-green-500 text-white px-4 py-3 rounded-lg cursor-pointer">
-                Dashboard
-              </li>
-
-              <li className="hover:bg-slate-700 px-4 py-3 rounded-lg cursor-pointer transition">
-                My Todos
-              </li>
-
-              <li className="hover:bg-slate-700 px-4 py-3 rounded-lg cursor-pointer transition">
-                Completed
-              </li>
-
-            </ul>
-          </aside>
+          <Sidebar />
 
           {/* Main Content */}
           <main className="flex-1 p-8">
