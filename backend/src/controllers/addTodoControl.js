@@ -10,7 +10,7 @@ const addTodo = asyncHandler(async (req, res) => {
         _id: id
     })
 
-    const {desc, isDone, isPriority} = req.body
+    const {desc, isDone, isPriority, inProgress, } = req.body
 
     const todo = await Todo.findOne({ desc })
 
@@ -24,7 +24,8 @@ const addTodo = asyncHandler(async (req, res) => {
         email: user.email,
         desc,
         isDone,
-        isPriority
+        isPriority,
+        inProgress,
     })
 
     return res.status(201).json({

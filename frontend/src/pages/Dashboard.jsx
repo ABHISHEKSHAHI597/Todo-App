@@ -14,7 +14,9 @@ const Dashboard = () => {
   const [total, setTotal] = useState()
   const [completed, setCompleted] = useState()
   const [pending, setPending] = useState()
-  const [progress,setProgress] = useState()
+  const [progress, setProgress] = useState()
+  const [inProgressTodos, setInProgressTodos] = useState([])
+  const [isPriorityTodos, setIsPriorityTodos] = useState([])
 
   useEffect(() => {
     const getData = async () => {
@@ -38,6 +40,8 @@ const Dashboard = () => {
           setCompleted(data.completed)
           setPending(data.pending)
           setProgress(data.progress)
+          setIsPriorityTodos(data.isPriorityTodos)
+          setInProgressTodos(data.inProgressTodos)
           return
         }
       }
@@ -52,8 +56,8 @@ const Dashboard = () => {
 
   const handleLogout = () => {
     navigate("/")
-  } 
-  
+  }
+
   const handleAddNewTodo = () => {
     navigate("/dashboard/addTodo")
   }
@@ -178,25 +182,12 @@ const Dashboard = () => {
 
                 <div className="space-y-4">
 
-                  <div className="bg-slate-700 p-4 rounded-lg flex justify-between">
-                    <span>Learn JWT Authentication</span>
-                    <span className="text-yellow-400">Pending</span>
-                  </div>
-
-                  <div className="bg-slate-700 p-4 rounded-lg flex justify-between">
-                    <span>Complete DSA Practice</span>
-                    <span className="text-yellow-400">Pending</span>
-                  </div>
-
-                  <div className="bg-slate-700 p-4 rounded-lg flex justify-between">
-                    <span>Build Dashboard UI</span>
-                    <span className="text-green-400">Completed</span>
-                  </div>
-
-                  <div className="bg-slate-700 p-4 rounded-lg flex justify-between">
-                    <span>Setup Express Session</span>
-                    <span className="text-green-400">Completed</span>
-                  </div>
+                  {inProgressTodos.map((todo) => {
+                    return (<div key={todo._id} className="bg-slate-700 p-4 rounded-lg flex justify-between">
+                      <span>{todo.desc}</span>
+                      <span className="text-yellow-400">{todo.isPriority && "⭐ Priority"}</span>
+                    </div>)
+                  })}
 
                 </div>
 
@@ -211,23 +202,25 @@ const Dashboard = () => {
 
                 <div className="space-y-4">
 
-                  <div className="bg-slate-700 p-4 rounded-lg">
-                    <h3 className="font-semibold">
-                      Deploy MERN Project
-                    </h3>
-                  </div>
+                  {isPriorityTodos.map((todo) => {
+                    return (
+                      <div
+                        key={todo._id}
+                        className="bg-slate-700 p-4 rounded-lg flex justify-between items-center"
+                      >
+                        <h3 className="font-semibold">
+                          {todo.desc}
+                        </h3>
 
-                  <div className="bg-slate-700 p-4 rounded-lg">
-                    <h3 className="font-semibold">
-                      Finish MongoDB Integration
-                    </h3>
-                  </div>
-
-                  <div className="bg-slate-700 p-4 rounded-lg">
-                    <h3 className="font-semibold">
-                      Add User Authentication
-                    </h3>
-                  </div>
+                        <span
+                          className={`${todo.isDone ? "text-green-400" : "text-yellow-400"
+                            }`}
+                        >
+                          {todo.isDone ? "✅ Completed" : "⏳ Not Completed"}
+                        </span>
+                      </div>
+                    )
+                  })}
 
                 </div>
 

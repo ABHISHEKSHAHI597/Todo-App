@@ -27,7 +27,8 @@ const AddTodo = () => {
       body: JSON.stringify({
         desc: data.desc.trim(),
         isDone: data.isDone,
-        isPriority: data.isPriority
+        isPriority: data.isPriority,
+        inProgress:data.inProgress,
       })
     })
 
@@ -136,7 +137,7 @@ const AddTodo = () => {
             </label>
 
             <select
-              {...register('isInProgress', {
+              {...register('inProgress', {
                 required: 'Please select an option'
               })}
               className='w-full px-4 py-3 rounded-xl bg-slate-700/80 text-white border border-slate-600 focus:outline-none focus:ring-2 focus:ring-green-500/40 focus:border-green-500'
