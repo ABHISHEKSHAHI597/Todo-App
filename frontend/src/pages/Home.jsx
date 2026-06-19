@@ -45,16 +45,16 @@ const Home = () => {
         password: data.password
       })
     })
-    
+
     const statusCode = await res.status
-    
+
     const result = await res.json()
-    
-    if (statusCode == 401){
+
+    if (statusCode == 401) {
       alert(result.message);
     }
 
-    if(statusCode == 200){
+    if (statusCode == 200) {
       // Code after user is logged in
       navigate('/dashboard')
       console.log(result.message)
@@ -83,35 +83,39 @@ const Home = () => {
 
     const result = await res.json()
 
-    if (statusCode == 409){
+    if (statusCode == 409) {
       alert(result.message);
     }
 
-    if(statusCode == 201){
+    if (statusCode == 201) {
       // Code after user is registered
       navigate('/dashboard')
       console.log(result.message)
     }
-    
+
   }
+
+  const inputStyles = 'w-full px-4 py-3 rounded-xl bg-slate-700/80 text-white border border-slate-600 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-green-500/40 focus:border-green-500 transition-all duration-300'
 
   return (
     <>
-      <div className='bg-[#0F172A] min-h-screen flex flex-col'>
+      <div className='min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-blue-950 flex flex-col'>
 
         {/* Header */}
-        <div className='h-20 bg-[#111827] flex items-center justify-center text-[#22C55E] text-4xl font-semibold shadow-lg'>
-          <p>Welcome to my Todo App</p>
+        <div className='h-24 bg-slate-950/70 backdrop-blur-md border-b border-slate-800 flex items-center justify-center shadow-2xl'>
+          <h1 className='text-5xl font-extrabold bg-linear-to-r from-green-400 via-emerald-500 to-green-600 bg-clip-text text-transparent'>
+            Todo App
+          </h1>
         </div>
 
         {/* Login and Register Cards */}
-        <div className='flex flex-1 gap-12 justify-center items-center px-10'>
+        <div className='flex flex-col lg:flex-row flex-1 gap-10 justify-center items-center px-6 py-12'>
 
           {/* Login Card */}
-          <div className='bg-[#1E293B] w-full max-w-md rounded-3xl p-8 shadow-2xl'>
+          <div className='w-full max-w-md rounded-3xl p-8 bg-slate-800/60 backdrop-blur-xl border border-slate-700 shadow-[0_0_40px_rgba(34,197,94,0.08)] hover:shadow-[0_0_50px_rgba(34,197,94,0.15)] transition-all duration-300'>
 
-            <h2 className='text-[#F8FAFC] text-3xl font-bold text-center mb-8'>
-              Login <span className='text-slate-400 text-xl font-medium'>(For existing user)</span>
+            <h2 className='text-slate-50 text-4xl font-bold text-center mb-8'>
+              Login <span className='block text-slate-400 text-base mt-2 font-normal'>(For existing user)</span>
             </h2>
 
             {loginSubmitting && (
@@ -135,7 +139,7 @@ const Home = () => {
                     }
                   })}
                   type="email"
-                  className='w-full p-3 rounded-xl bg-slate-700 text-white border border-slate-600 focus:outline-none focus:border-[#22C55E]'
+                  className={inputStyles}
                 />
 
                 {loginErrors.email && (
@@ -155,7 +159,7 @@ const Home = () => {
                     }
                   })}
                   type="password"
-                  className='w-full p-3 rounded-xl bg-slate-700 text-white border border-slate-600 focus:outline-none focus:border-[#22C55E]'
+                  className={inputStyles}
                 />
 
                 {loginErrors.password && (
@@ -169,7 +173,7 @@ const Home = () => {
                 disabled={loginSubmitting}
                 type='submit'
                 value='Login'
-                className='bg-[#22C55E] text-white py-3 rounded-xl font-semibold cursor-pointer hover:bg-green-600 transition duration-200 disabled:opacity-50'
+                className='bg-green-500 text-white py-3 rounded-xl font-semibold cursor-pointer hover:bg-green-600 hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg'
               />
 
             </form>
@@ -177,10 +181,10 @@ const Home = () => {
           </div>
 
           {/* Register Card */}
-          <div className='bg-[#1E293B] w-full max-w-md rounded-3xl px-8 py-8 shadow-2xl'>
+          <div className='w-full max-w-md rounded-3xl p-8 bg-slate-800/60 backdrop-blur-xl border border-slate-700 shadow-[0_0_40px_rgba(34,197,94,0.08)] hover:shadow-[0_0_50px_rgba(34,197,94,0.15)] transition-all duration-300'>
 
-            <h2 className='text-[#F8FAFC] text-3xl font-bold text-center mb-8'>
-              Register <span className='text-slate-400 text-xl font-medium'>(For new user)</span>
+            <h2 className='text-slate-50 text-4xl font-bold text-center mb-8'>
+              Register <span className='block text-slate-400 text-base mt-2 font-normal'>(For new user)</span>
             </h2>
 
             {registerSubmitting && (
@@ -204,7 +208,7 @@ const Home = () => {
                     }
                   })}
                   type="text"
-                  className='w-full p-3 rounded-xl bg-slate-700 text-white border border-slate-600 focus:outline-none focus:border-[#22C55E]'
+                  className={inputStyles}
                 />
 
                 {registerErrors.username && (
@@ -224,7 +228,7 @@ const Home = () => {
                     }
                   })}
                   type="email"
-                  className='w-full p-3 rounded-xl bg-slate-700 text-white border border-slate-600 focus:outline-none focus:border-[#22C55E]'
+                  className={inputStyles}
                 />
 
                 {registerErrors.email && (
@@ -252,7 +256,7 @@ const Home = () => {
                     }
                   })}
                   type="password"
-                  className='w-full p-3 rounded-xl bg-slate-700 text-white border border-slate-600 focus:outline-none focus:border-[#22C55E]'
+                  className={inputStyles}
                 />
 
                 {registerErrors.password && (
@@ -274,7 +278,7 @@ const Home = () => {
                       value === password || "Passwords do not match"
                   })}
                   type="password"
-                  className='w-full p-3 rounded-xl bg-slate-700 text-white border border-slate-600 focus:outline-none focus:border-[#22C55E]'
+                  className={inputStyles}
                 />
 
                 {registerErrors.confirmPassword && (
@@ -288,7 +292,7 @@ const Home = () => {
                 disabled={registerSubmitting}
                 type='submit'
                 value='Register'
-                className='bg-[#22C55E] text-white py-3 rounded-xl font-semibold cursor-pointer hover:bg-green-600 transition duration-200 disabled:opacity-50'
+                className='bg-green-500 text-white py-3 rounded-xl font-semibold cursor-pointer hover:bg-green-600 hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg'
               />
 
             </form>

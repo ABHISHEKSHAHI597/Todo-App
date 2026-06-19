@@ -27,8 +27,6 @@ const login = asyncHandler(async (req, res) => {
 
     req.session.userId = user._id
 
-    console.log(req.session.userId)
-
     res.status(200).json({
         message: "Succesfully logged in"
     })

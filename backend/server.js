@@ -8,6 +8,7 @@ import mongoose from "mongoose"
 import dotenv from "dotenv"
 import { protect } from "./src/middleware/sessionId.js"
 import session from "express-session";
+import { addTodo } from "./src/controllers/addTodoControl.js"
 
 dotenv.config()
 const app = express()
@@ -33,7 +34,8 @@ await mongoose.connect(process.env.MONGO_URI)
 
 app.post('/login', login)
 app.post('/register', register)
-app.get('/dashboard',protect, dashboard)
+app.get('/dashboard', protect, dashboard)
+app.post('/dashboard/addTodo', protect, addTodo)
 
 app.listen(port, ()=>{
     console.log(`App is listening on port ${port}`.cyan.underline.bold)

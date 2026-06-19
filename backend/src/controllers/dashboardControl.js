@@ -4,25 +4,32 @@ import asyncHandler from "express-async-handler"
 import mongoose from "mongoose"
 import bcrypt from "bcryptjs"
 
-const dashboard = asyncHandler(async(req,res)=>{
+const dashboard = asyncHandler(async (req, res) => {
     const id = req.session.userId.toString()
 
-    console.log(id)
-
     const user = await User.findOne({
-        _id : id
+        _id: id
     })
 
-    console.log(user.name)
+    const inProgressTodos = await Todo.find({ email: user.email, inProgress: true })
+    const isPriorityTodos = await Todo.find({ email: user.email, isPriority: true })
 
-    // const todos = await Todo.find({ email : user.email})
+    const total = await Todo.countDocuments({ email: user.email })
+    const completed = await Todo.countDocuments({ email: user.email, isDone: true })
+    const pending = total - completed
+    const progress = inProgressTodos.length
 
-    // console.log(todos)
+
 
     res.status(200).json({
-        // todos,
-        name: user.name
+        name: user.name,
+        total,
+        completed,
+        pending,
+        progress,
+        inProgressTodos,
+        isPriorityTodos,
     })
 })
 
-export {dashboard}
+export { dashboard }
