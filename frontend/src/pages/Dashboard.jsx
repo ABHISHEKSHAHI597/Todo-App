@@ -90,7 +90,7 @@ const Dashboard = () => {
                 Stay productive and keep track of your daily goals.
               </p>
 
-              <button className="bg-green-500 hover:bg-green-600 px-6 py-3 rounded-lg font-semibold transition flex items-center gap-2" onClick={handleAddNewTodo}>
+              <button className="bg-green-500 hover:bg-green-600 px-6 py-3 rounded-lg font-semibold transition flex items-center gap-2 cursor-pointer" onClick={handleAddNewTodo}>
                 <FaPlus />
                 Add New Todo
               </button>
@@ -197,7 +197,7 @@ const Dashboard = () => {
         </div>
 
         {/* Floating Button */}
-        <button className="fixed bottom-8 right-8 w-16 h-16 rounded-full bg-green-500 hover:bg-green-600 shadow-xl flex items-center justify-center text-2xl transition" onClick={handleAddNewTodo}>
+        <button className="fixed bottom-8 right-8 w-16 h-16 rounded-full bg-green-500 hover:bg-green-600 shadow-xl flex items-center justify-center text-2xl transition cursor-pointer" onClick={handleAddNewTodo}>
           <FaPlus />
         </button>
 

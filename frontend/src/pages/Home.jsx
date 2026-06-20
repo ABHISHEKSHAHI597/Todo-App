@@ -90,7 +90,6 @@ const Home = () => {
     if (statusCode == 201) {
       // Code after user is registered
       navigate('/dashboard')
-      console.log(result.message)
     }
 
   }

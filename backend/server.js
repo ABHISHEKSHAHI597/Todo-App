@@ -9,6 +9,8 @@ import dotenv from "dotenv"
 import { protect } from "./src/middleware/sessionId.js"
 import session from "express-session";
 import { addTodo } from "./src/controllers/addTodoControl.js"
+import { todos } from "./src/controllers/getTodosControl.js"
+import { deleteTodo } from "./src/controllers/deleteTodo.js"
 
 dotenv.config()
 const app = express()
@@ -36,6 +38,8 @@ app.post('/login', login)
 app.post('/register', register)
 app.get('/dashboard', protect, dashboard)
 app.post('/dashboard/addTodo', protect, addTodo)
+app.get('/todos', protect, todos)
+app.delete('/deleteTodo/:id',protect, deleteTodo)
 
 app.listen(port, ()=>{
     console.log(`App is listening on port ${port}`.cyan.underline.bold)

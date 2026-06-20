@@ -20,7 +20,7 @@ const Navbar = (props) => {
                     <span>{props.name}</span>
                 </div>
 
-                <button onClick={handleLogout} className="flex items-center gap-2 bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg transition">
+                <button onClick={handleLogout} className="flex items-center gap-2 bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg transition cursor-pointer">
                     <FaSignOutAlt />
                     Logout
                 </button>

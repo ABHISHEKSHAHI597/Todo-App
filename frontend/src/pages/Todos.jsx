@@ -1,37 +1,50 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaTasks } from 'react-icons/fa'
 import Sidebar from '../components/Sidebar'
 import Navbar from '../components/Navbar'
 
 const Todos = () => {
 
-  const todos = [
-    {
-      _id: 1,
-      desc: 'Learn JWT Authentication',
-      isDone: false,
-      isPriority: true
-    },
-    {
-      _id: 2,
-      desc: 'Complete DSA Practice',
-      isDone: true,
-      isPriority: false
-    },
-    {
-      _id: 3,
-      desc: 'Build Dashboard UI',
-      isDone: true,
-      isPriority: true
-    },
-    {
-      _id: 4,
-      desc: 'Setup Express Session',
-      isDone: false,
-      isPriority: false
-    }
-  ]
+  const [name, setName] = useState(null)
+  const [todos, setTodos] = useState([])
 
+  useEffect(() => {
+    const getTodos = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/todos", {
+          method: "GET",
+          credentials: "include",
+        });
+
+
+        if (!res.ok) {
+          throw new Error("Failed to fetch todos");
+        }
+
+        const { name, todos } = await res.json();
+
+        setName(name);
+        setTodos(todos);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    getTodos();
+    console.log('Sent get request to api/todos')
+  }, []);
+
+  const deleteTodo = async (id) => {
+
+    const res = await fetch(`http://localhost:5000/deleteTodo/${id}`, {
+      method: 'DELETE',
+      credentials: 'include'
+    })
+
+    setTodos(prev => prev.filter(todo => todo._id !== id))
+
+    // window.location.reload()
+  }
   return (
     <div className='min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-blue-950 text-white'>
 
@@ -65,7 +78,7 @@ const Todos = () => {
                     {todo.desc}
                   </h3>
 
-                  <div className='flex gap-2'>
+                  <div className='flex items-center gap-3'>
 
                     {todo.isDone && (
                       <span className='px-3 py-1 rounded-full text-sm font-semibold bg-green-500/20 text-green-400 border border-green-500/30'>
@@ -78,6 +91,13 @@ const Todos = () => {
                         🔥 Priority
                       </span>
                     )}
+
+                    <button
+                      onClick={() => deleteTodo(todo._id)}
+                      className='px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600 text-white font-medium transition cursor-pointer'
+                    >
+                      Delete
+                    </button>
 
                   </div>
 
